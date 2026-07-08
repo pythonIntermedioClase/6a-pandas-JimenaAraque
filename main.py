@@ -183,9 +183,10 @@ valores = [4_500_000, 12_300_000, 2_100_000, 8_750_000, 15_200_000]
 
 def analizar_series(nits,valores):
     serie=pd.Series (valores, index=nits)
-    print(serie.min)
-    print(serie.max)
-    print(serie.mean)
+    print(serie)
+    print(serie.min())
+    print(serie.max())
+    print(serie.mean())
     
 
 if __name__ == "__main__":
