@@ -143,7 +143,56 @@ def main():
 # =============================================================================
 # PUNTO DE ENTRADA
 # =============================================================================
+declaracion = {
+    "nit": "900123456-1",
+    "razon_social": "Comercializadora Andina S.A.S",
+    "valor_declarado": 4_500_000,
+    "estado": "Presentada",
+    "municipio": "Bogotá",
+}
+
+def funcion_revisar(declaracion):
+    for clave, valor in declaracion.items():
+        print(clave, ":", valor)
+    declaracion["estado"]="revisada" ##cambiamos el estado a revisado
+    print(f"\nEstado actualizado: {declaracion['estado']}")
+
+
+def probar_acceso_diccionario():
+    declaracion = {"nit": "800234567-0", "estado": "Pendiente"}
+    print(declaracion["valor_declarado"])
+## Error porque no existe la llave valor_declarado
+
+def probar_acceso_serie():
+    serie = pd.Series([100, 200, 300])
+    print(serie[5])
+## Error porque no existe la posicion (indice) 5 
+
+
+def explorar_dataframe():
+    diccionario={"nit": ["9999999999","2222222222","3333333333","666666666"], "razon_social": ["Empresa A", "Empresa B", "Empresa C","Empresa D"],
+                 "municipio": ["Cucuta","Barranquila","Bucaramanga","Pereira"],"valor_declarado": ["900","200","300","600"] }
+
+    data_frame = pd.DataFrame(diccionario)
+    print(data_frame.index)
+    print(data_frame.columns)
+    print(data_frame.shape)
+
+nits   = ["900111222-0", "800333444-5", "700555666-1", "600777888-2", "500999000-3"]
+valores = [4_500_000, 12_300_000, 2_100_000, 8_750_000, 15_200_000]
+
+def analizar_series(nits,valores):
+    serie=pd.Series (valores, index=nits)
+    print(serie.min)
+    print(serie.max)
+    print(serie.mean)
+    
 
 if __name__ == "__main__":
-    main()
+    analizar_series(nits,valores)
+    ##explorar_dataframe ()
+    ##probar_acceso_serie()
+    ##funcion_revisar(declaracion)
+    ##probar_acceso_diccionario()
+##    main()
 
