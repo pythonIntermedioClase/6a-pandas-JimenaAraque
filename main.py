@@ -188,9 +188,14 @@ def analizar_series(nits,valores):
     print(serie.max())
     print(serie.mean())
     
-
+def probar_carga_archivo():
+    df = pd.read_csv("data/inputs/archivo_inexistente.csv")
 if __name__ == "__main__":
-    analizar_series(nits,valores)
+    df = cargar_declaraciones("data/input/declaraciones_iva_2025.csv")
+    print(df.shape)
+    print(df.head())
+    ##probar_carga_archivo()
+    ##analizar_series(nits,valores)
     ##explorar_dataframe ()
     ##probar_acceso_serie()
     ##funcion_revisar(declaracion)
