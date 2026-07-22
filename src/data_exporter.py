@@ -30,6 +30,12 @@ def exportar_csv(df, carpeta, nombre_base):
     # Construye el nombre del archivo
     # Construye la ruta completa
     # Exporta el resultado
+    
+    fecha = date.today().strftime("%Y%m%d")
+    nombre_archivo = f"{nombre_base}_{fecha_hoy}.csv"
+    ruta_completa = f"{carpeta}/{nombre_archivo}"
+    df.to_csv(ruta_completa, index=False)
+    print(f"CSV guardado: {ruta_completa}")
     pass
 
 
