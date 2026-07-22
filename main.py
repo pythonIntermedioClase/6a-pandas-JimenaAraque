@@ -15,13 +15,13 @@ import pandas as pd
 from datetime import date
 
 # Sección 3:
-# from src.data_loader import cargar_declaraciones
+from src.data_loader import cargar_declaraciones
 #
 # Sección 4 — agrega las dos funciones nuevas al import de data_loader:
-# from src.data_loader import cargar_declaraciones, inspeccionar_datos, validar_nulos
+from src.data_loader import cargar_declaraciones, inspeccionar_datos, validar_nulos
 #
 # Sección 5:
-# from src.data_transformer import clasificar_por_valor, agregar_identificador_periodo, preparar_columnas_salida
+from src.data_transformer import clasificar_por_valor, agregar_identificador_periodo, preparar_columnas_salida
 #
 # Sección 6:
 # from src.data_exporter import exportar_csv, exportar_excel_por_categoria
@@ -190,10 +190,41 @@ def analizar_series(nits,valores):
     
 def probar_carga_archivo():
     df = pd.read_csv("data/inputs/archivo_inexistente.csv")
+
+def probar_np_where():
+    df = pd.read_csv("data/inputs/declaraciones_iva_2025.csv")
+    df["categoria"] = np.where(df["valor_declarado"] >= 5_000_000, "Alto", "Bajo", "Medio")
+
 if __name__ == "__main__":
-    df = cargar_declaraciones("data/input/declaraciones_iva_2025.csv")
-    print(df.shape)
-    print(df.head())
+
+
+    #probar_np_where()
+    df = pd.read_csv(
+        "data/inputs/declaraciones_iva_2025.csv",
+        dtype={"nit": str, "codigo_municipio": str},
+    )
+    df = clasificar_por_valor(df, umbral_alto=10_000_000, umbral_medio=5_000_000)
+    df = agregar_identificador_periodo(df)
+    columnas = [
+        "identificador_periodo", "nit", "razon_social",
+        "municipio", "periodo", "valor_declarado", "nivel_riesgo", "estado",
+    ]
+    df_salida = preparar_columnas_salida(df, columnas)
+    print(df_salida.head())
+    print(df["nivel_riesgo"].value_counts())
+
+#    df_completo = cargar_declaraciones("data/inputs/declaraciones_iva_2025.csv")
+ #   df_reducido = cargar_declaraciones(
+  #      "data/inputs/declaraciones_iva_2025.csv",
+   #     columnas=["nit", "valor_declarado", "estado"],
+    #)
+    #print("Completo:", df_completo.shape)
+    #print("Reducido:", df_reducido.shape)
+    #print("Tipo de nit:", df_completo["nit"].dtype)  # → object
+
+    ##df = cargar_declaraciones("data/input/declaraciones_iva_2025.csv")
+    ##print(df.shape)
+    ##print(df.head())
     ##probar_carga_archivo()
     ##analizar_series(nits,valores)
     ##explorar_dataframe ()
